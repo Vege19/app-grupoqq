@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "686970204138",
+    "firebase_url": "https://grupo-qq.firebaseio.com",
+    "project_id": "grupo-qq",
+    "storage_bucket": "grupo-qq.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686970204138:android:f70c426211930db2d7cc93",
+        "android_client_info": {
+          "package_name": "com.grupoqq.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686970204138-0ltdpknmfdm6e8dvo12k15baoebk7sh2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grupoqq.app",
+            "certificate_hash": "e5282ba2e99aa6f1145d6595dcd1935120198e3f"
+          }
+        },
+        {
+          "client_id": "686970204138-aqvfuqbt54pqq4tmunfikcc34juc6ci1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf8GdVUPVuYSt8Id0ugT1oSSxDXF-_Dtk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686970204138-aqvfuqbt54pqq4tmunfikcc34juc6ci1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
