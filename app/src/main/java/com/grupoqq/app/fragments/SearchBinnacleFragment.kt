@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.grupoqq.app.BinnacleModel
+import com.grupoqq.app.models.BinnacleModel
 
 import com.grupoqq.app.R
 import com.grupoqq.app.utils.getFirebaseReference
@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_search_binnacle.*
 class SearchBinnacleFragment : Fragment() {
 
     private lateinit var binnacleCode: String
+    private val bundle: Bundle = Bundle()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -55,7 +56,8 @@ class SearchBinnacleFragment : Fragment() {
                     for (tmp in p0.children) {
                         val binnacle = tmp.getValue(BinnacleModel::class.java)
                         if (binnacle?.binnacleId == binnacleCode) {
-
+                            bundle.putSerializable("BINNACLE_KEY", binnacle)
+                            findNavController().navigate(R.id.action_searchBinnacleFragment_to_binnacleFragment, bundle)
                             break
                         } else {
                             Log.d("Debug", "Referencia no encontrada.")

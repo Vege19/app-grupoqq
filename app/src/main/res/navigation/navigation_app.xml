@@ -19,6 +19,15 @@
         android:id="@+id/searchBinnacleFragment"
         android:name="com.grupoqq.app.fragments.SearchBinnacleFragment"
         android:label="fragment_search_binnacle"
-        tools:layout="@layout/fragment_search_binnacle" />
+        tools:layout="@layout/fragment_search_binnacle" >
+        <action
+            android:id="@+id/action_searchBinnacleFragment_to_binnacleFragment"
+            app:destination="@id/binnacleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/binnacleFragment"
+        android:name="com.grupoqq.app.fragments.BinnacleFragment"
+        android:label="fragment_binnacle"
+        tools:layout="@layout/fragment_binnacle" />
 
 </navigation>

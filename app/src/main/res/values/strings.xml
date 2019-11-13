@@ -4,4 +4,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todo">TODO</string>
+
+    <!--Binnacle tags-->
+    <string name="tag_model"><b>Modelo: </b></string>
+    <string name="tag_brand"><b>Marca: </b></string>
+    <string name="tag_year"><b>Año: </b></string>
+    <string name="tag_registration_number"><b>Matrícula: </b></string>
+    <string name="tag_client"><b>Propietario: </b></string>
+    <string name="tag_mechanic"><b>Mecánico a cargo: </b></string>
 </resources>
