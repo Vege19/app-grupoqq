@@ -28,6 +28,10 @@ class WelcomeFragment : Fragment() {
         cardSelectionOne.setOnClickListener {
             findNavController().navigate(R.id.action_welcomeFragment_to_searchBinnacleFragment)
         }
+
+        cardSelectionTwo.setOnClickListener {
+            findNavController().navigate(R.id.action_welcomeFragment_to_mechanicProfileFragment)
+        }
     }
 
 }

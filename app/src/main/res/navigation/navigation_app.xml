@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_searchBinnacleFragment"
             app:destination="@id/searchBinnacleFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_mechanicProfileFragment"
+            app:destination="@id/mechanicProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchBinnacleFragment"
@@ -38,5 +41,10 @@
         android:name="com.grupoqq.app.fragments.RepairDetailsFragment"
         android:label="fragment_repair_details"
         tools:layout="@layout/fragment_repair_details" />
+    <fragment
+        android:id="@+id/mechanicProfileFragment"
+        android:name="com.grupoqq.app.fragments.MechanicProfileFragment"
+        android:label="fragment_mechanic_profile"
+        tools:layout="@layout/fragment_mechanic_profile" />
 
 </navigation>
