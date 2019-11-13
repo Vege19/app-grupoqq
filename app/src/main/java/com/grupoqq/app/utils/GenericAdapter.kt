@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class GenericAdapter<T>(
     val layout: Int,
-    val list: MutableList<T>,
+    val list: List<T>,
     val action: (
         viewHolder: GenericAdapter.ViewHolder,
         view: View,

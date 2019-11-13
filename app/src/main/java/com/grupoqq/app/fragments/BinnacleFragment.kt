@@ -8,19 +8,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
 import com.grupoqq.app.R
-import com.grupoqq.app.models.BinnacleModel
-import com.grupoqq.app.models.ClientModel
-import com.grupoqq.app.models.MechanicModel
-import com.grupoqq.app.models.VehicleModel
+import com.grupoqq.app.models.*
+import com.grupoqq.app.utils.GenericAdapter
 import com.grupoqq.app.utils.getFirebaseReference
 import kotlinx.android.synthetic.main.fragment_binnacle.*
+import kotlinx.android.synthetic.main.item_repair.view.*
 
 class BinnacleFragment : Fragment() {
 
@@ -28,6 +29,7 @@ class BinnacleFragment : Fragment() {
     private lateinit var mVehicle: VehicleModel
     private lateinit var mClient: ClientModel
     private lateinit var mMechanic: MechanicModel
+    private var mRepairs = mutableListOf<BinnacleRepairModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -37,8 +39,9 @@ class BinnacleFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        setOnClickListeners()
         fetchBinnacle()
+        setOnClickListeners()
+        getBinnacleRepairs()
         loadBinnacleData()
 
     }
@@ -61,6 +64,59 @@ class BinnacleFragment : Fragment() {
             it.rotation = if (binnacleVehicleDetailsContainer.visibility == View.VISIBLE) 180f else 0f
         }
 
+    }
+
+    private fun loadRepairsRecyclerView() {
+        binnancleRepairsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binnancleRepairsRecyclerView.adapter = repairsAdapter()
+    }
+
+    private fun getBinnacleRepairs() {
+        getFirebaseReference("binnacle/0/repairs").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                if (mRepairs.size > 0) {
+                    mRepairs.clear()
+                }
+
+                if (p0.exists()) {
+                    for (tmp in p0.children) {
+                        val repair = tmp.getValue(BinnacleRepairModel::class.java)
+                        Log.d("Debug", repair.toString())
+                        mRepairs.add(repair!!)
+                        loadRepairsRecyclerView()
+                        repairsAdapter().notifyDataSetChanged()
+                    }
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("DEBUG", p0.message)
+            }
+        })
+    }
+
+    private fun repairsAdapter(): GenericAdapter<BinnacleRepairModel> {
+        return GenericAdapter(R.layout.item_repair, mRepairs, fun (viewHolder, view, repair, _) {
+            if (mRepairs.isNotEmpty()) {
+                view.repairNameTxt.text = repair.repair?.repairName
+                view.repairStartDate.text = repair.repairStartDate
+
+                when (repair.repairStatus) {
+                    1 -> {
+                        view.repairStatusTxt.text = "Pendiente"
+                        view.repairStatusTxt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorStatusPend))
+                    }
+                    2 -> {
+                        view.repairStatusTxt.text = "En progreso"
+                        view.repairStatusTxt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorStatusInProgress))
+                    }
+                    else -> {
+                        view.repairStatusTxt.text = "Completado"
+                        view.repairStatusTxt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorStatusCompleted))
+                    }
+                }
+            }
+        })
     }
 
     private fun loadBinnacleData() {

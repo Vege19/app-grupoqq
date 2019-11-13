@@ -6,4 +6,9 @@
     <color name="transparentBlack">#99000000</color>
     <color name="colorTextPrimary">#000000</color>
     <color name="colorTextAccent">#99FFFFFF</color>
+
+    <!-- status color -->
+    <color name="colorStatusPend">#F44336</color>
+    <color name="colorStatusInProgress">#FFC107</color>
+    <color name="colorStatusCompleted">#4CAF50</color>
 </resources>

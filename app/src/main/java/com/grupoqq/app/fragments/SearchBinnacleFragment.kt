@@ -50,7 +50,7 @@ class SearchBinnacleFragment : Fragment() {
     }
 
     private fun searchBinnacle() {
-        getFirebaseReference("binnacle").addValueEventListener(object: ValueEventListener {
+        getFirebaseReference("binnacle").addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
                     for (tmp in p0.children) {
