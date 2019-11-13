@@ -30,6 +30,7 @@ class BinnacleFragment : Fragment() {
     private lateinit var mClient: ClientModel
     private lateinit var mMechanic: MechanicModel
     private var mRepairs = mutableListOf<BinnacleRepairModel>()
+    private val bundle = Bundle()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -114,6 +115,12 @@ class BinnacleFragment : Fragment() {
                         view.repairStatusTxt.text = "Completado"
                         view.repairStatusTxt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorStatusCompleted))
                     }
+                }
+
+                viewHolder.itemView.setOnClickListener {
+                    bundle.putInt("BINNACLE_REPAIR_ID_KEY", repair.binnacleRepairId)
+                    bundle.putSerializable("REPAIR_KEY", repair)
+                    findNavController().navigate(R.id.action_binnacleFragment_to_repairDetailsFragment, bundle)
                 }
             }
         })

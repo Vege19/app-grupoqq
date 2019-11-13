@@ -28,6 +28,15 @@
         android:id="@+id/binnacleFragment"
         android:name="com.grupoqq.app.fragments.BinnacleFragment"
         android:label="fragment_binnacle"
-        tools:layout="@layout/fragment_binnacle" />
+        tools:layout="@layout/fragment_binnacle" >
+        <action
+            android:id="@+id/action_binnacleFragment_to_repairDetailsFragment"
+            app:destination="@id/repairDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/repairDetailsFragment"
+        android:name="com.grupoqq.app.fragments.RepairDetailsFragment"
+        android:label="fragment_repair_details"
+        tools:layout="@layout/fragment_repair_details" />
 
 </navigation>
