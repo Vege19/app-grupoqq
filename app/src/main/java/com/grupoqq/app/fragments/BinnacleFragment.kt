@@ -1,15 +1,15 @@
 package com.grupoqq.app.fragments
 
 import android.annotation.SuppressLint
-import android.opengl.Visibility
 import android.os.Bundle
+import android.renderscript.Sampler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -21,7 +21,9 @@ import com.grupoqq.app.models.*
 import com.grupoqq.app.utils.GenericAdapter
 import com.grupoqq.app.utils.getFirebaseReference
 import kotlinx.android.synthetic.main.fragment_binnacle.*
+import kotlinx.android.synthetic.main.item_repair.*
 import kotlinx.android.synthetic.main.item_repair.view.*
+import kotlinx.android.synthetic.main.item_repair.view.repairNameTxt
 
 class BinnacleFragment : Fragment() {
 
@@ -29,7 +31,7 @@ class BinnacleFragment : Fragment() {
     private lateinit var mVehicle: VehicleModel
     private lateinit var mClient: ClientModel
     private lateinit var mMechanic: MechanicModel
-    private var mRepairs = mutableListOf<BinnacleRepairModel>()
+    private var mBinnacleRepairs = mutableListOf<BinnacleRepairModel>()
     private val bundle = Bundle()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,9 +43,10 @@ class BinnacleFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         fetchBinnacle()
-        setOnClickListeners()
-        getBinnacleRepairs()
         loadBinnacleData()
+        setOnClickListeners()
+        loadRepairsRecyclerView()
+        getBinnacleRepairs()
 
     }
 
@@ -73,18 +76,17 @@ class BinnacleFragment : Fragment() {
     }
 
     private fun getBinnacleRepairs() {
-        getFirebaseReference("binnacle/0/repairs").addValueEventListener(object : ValueEventListener {
+        getFirebaseReference("binnacle/${mBinnacle.binnacleId}/repairs").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                if (mRepairs.size > 0) {
-                    mRepairs.clear()
+                if (mBinnacleRepairs.size > 0) {
+                    mBinnacleRepairs.clear()
                 }
 
                 if (p0.exists()) {
                     for (tmp in p0.children) {
                         val repair = tmp.getValue(BinnacleRepairModel::class.java)
                         Log.d("Debug", repair.toString())
-                        mRepairs.add(repair!!)
-                        loadRepairsRecyclerView()
+                        mBinnacleRepairs.add(repair!!)
                         repairsAdapter().notifyDataSetChanged()
                     }
                 }
@@ -97,12 +99,13 @@ class BinnacleFragment : Fragment() {
     }
 
     private fun repairsAdapter(): GenericAdapter<BinnacleRepairModel> {
-        return GenericAdapter(R.layout.item_repair, mRepairs, fun (viewHolder, view, repair, _) {
-            if (mRepairs.isNotEmpty()) {
-                view.repairNameTxt.text = repair.repair?.repairName
-                view.repairStartDate.text = repair.repairStartDate
+        return GenericAdapter(R.layout.item_repair, mBinnacleRepairs, fun (viewHolder, view, repair, _) {
+            if (mBinnacleRepairs.isNotEmpty()) {
 
-                when (repair.repairStatus) {
+                setRepairName(view.repairNameTxt, repair.repairId)
+                view.repairStartDate.text = repair.binnacleRepairStartDate
+
+                when (repair.binnacleRepairStatus) {
                     1 -> {
                         view.repairStatusTxt.text = "Pendiente"
                         view.repairStatusTxt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorStatusPend))
@@ -121,6 +124,28 @@ class BinnacleFragment : Fragment() {
                     bundle.putInt("BINNACLE_REPAIR_ID_KEY", repair.binnacleRepairId)
                     bundle.putSerializable("REPAIR_KEY", repair)
                     findNavController().navigate(R.id.action_binnacleFragment_to_repairDetailsFragment, bundle)
+                }
+            }
+        })
+    }
+
+    private fun setRepairName(repairNameTxt: TextView, repairId: String) {
+        getFirebaseReference("repair").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("DEBUG", p0.message)
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    for (tmp in p0.children) {
+                        val repair = tmp.getValue(RepairModel::class.java)
+                        if (repair?.repairId == repairId) {
+                            repairNameTxt.text = repair.repairName
+                            repairsAdapter().notifyDataSetChanged()
+                            break
+                        } else {
+                            Log.d("DEBUG", "Not found.")
+                        }
+                    }
                 }
             }
         })
@@ -192,7 +217,6 @@ class BinnacleFragment : Fragment() {
                 Log.d("DEBUG", p0.message)
             }
         })
-
     }
 
     @SuppressLint("SetTextI18n")

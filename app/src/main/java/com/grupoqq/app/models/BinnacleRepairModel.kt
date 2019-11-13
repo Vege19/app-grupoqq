@@ -4,10 +4,10 @@ import java.io.Serializable
 
 data class BinnacleRepairModel(
     val binnacleRepairId: Int = 0,
-    val repair: RepairModel? = null,
-    val repairStatus: Int = 0,
-    val repairStartDate: String = "",
+    val repairId: String = "",
+    val binnacleRepairStatus: Int = 0,
+    val binnacleRepairStartDate: String = "",
     val isApproved: Boolean = false,
     val reports: List<ReportModel> = arrayListOf(),
-    val spareParts: List<SparePartModel> = arrayListOf()
+    val binnacleSpareParts: List<SparePartModel> = arrayListOf()
 ) : Serializable

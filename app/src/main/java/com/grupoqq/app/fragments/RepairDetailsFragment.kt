@@ -15,14 +15,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
 import com.grupoqq.app.R
-import com.grupoqq.app.models.BinnacleModel
 import com.grupoqq.app.models.BinnacleRepairModel
 import com.grupoqq.app.models.ReportModel
 import com.grupoqq.app.utils.GenericAdapter
 import com.grupoqq.app.utils.getFirebaseReference
 import com.grupoqq.app.utils.setGlideImage
 import kotlinx.android.synthetic.main.fragment_repair_details.*
-import kotlinx.android.synthetic.main.item_repair.*
 import kotlinx.android.synthetic.main.item_report.view.*
 
 class RepairDetailsFragment : Fragment() {
@@ -97,14 +95,14 @@ class RepairDetailsFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun loadBinnacleData() {
-        repairDetailNameTxt.text = mBinnacleRepair.repair?.repairName
+       // repairDetailNameTxt.text = mBinnacleRepair.repair?.repairName
         if (mBinnacleRepair.isApproved) {
-            repairDetailStartDateTxt.text = "Fecha de inicio: ${mBinnacleRepair.repairStartDate}"
+            repairDetailStartDateTxt.text = "Fecha de inicio: ${mBinnacleRepair.binnacleRepairStartDate}"
         } else {
             repairDetailStartDateTxt.text = "Sin aprobar"
         }
         var statusString = ""
-        statusString = when (mBinnacleRepair.repairStatus) {
+        statusString = when (mBinnacleRepair.binnacleRepairStatus) {
             1 -> "Pendiente"
             2 -> "En progreso"
             else -> "Finalizado"

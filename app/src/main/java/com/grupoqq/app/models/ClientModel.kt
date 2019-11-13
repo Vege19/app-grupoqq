@@ -3,7 +3,7 @@ package com.grupoqq.app.models
 import java.io.Serializable
 
 data class ClientModel(
-    val clientId: Int = 0,
+    val clientId: String = "",
     val clientMail: String = "",
     val clientNames: String = "",
     val clientPhone: String = "",

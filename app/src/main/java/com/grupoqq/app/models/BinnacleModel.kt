@@ -4,9 +4,9 @@ import java.io.Serializable
 
 data class BinnacleModel(
     val binnacleId: String = "",
-    val clientId: Int = 0,
-    val mechanicId: Int = 0,
-    val vehicleId: Int = 0,
+    val clientId: String = "",
+    val mechanicId: String = "",
+    val vehicleId: String = "",
     val repairs: List<BinnacleRepairModel> = arrayListOf()
     //val repairs: List<String> = arrayListOf()
 ) : Serializable
