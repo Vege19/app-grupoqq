@@ -3,7 +3,7 @@ package com.grupoqq.app.models
 import java.io.Serializable
 
 data class BinnacleRepairModel(
-    val binnacleRepairId: Int = 0,
+    val binnacleRepairId: String = "",
     val repairId: String = "",
     val binnacleRepairStatus: Int = 0,
     val binnacleRepairStartDate: String = "",

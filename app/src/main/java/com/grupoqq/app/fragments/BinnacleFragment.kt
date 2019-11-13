@@ -45,7 +45,6 @@ class BinnacleFragment : Fragment() {
         fetchBinnacle()
         loadBinnacleData()
         setOnClickListeners()
-        loadRepairsRecyclerView()
         getBinnacleRepairs()
 
     }
@@ -76,7 +75,7 @@ class BinnacleFragment : Fragment() {
     }
 
     private fun getBinnacleRepairs() {
-        getFirebaseReference("binnacle/${mBinnacle.binnacleId}/repairs").addValueEventListener(object : ValueEventListener {
+        getFirebaseReference("binnacle/${mBinnacle.binnacleId}/repairs").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (mBinnacleRepairs.size > 0) {
                     mBinnacleRepairs.clear()
@@ -87,6 +86,7 @@ class BinnacleFragment : Fragment() {
                         val repair = tmp.getValue(BinnacleRepairModel::class.java)
                         Log.d("Debug", repair.toString())
                         mBinnacleRepairs.add(repair!!)
+                        loadRepairsRecyclerView()
                         repairsAdapter().notifyDataSetChanged()
                     }
                 }
@@ -121,8 +121,9 @@ class BinnacleFragment : Fragment() {
                 }
 
                 viewHolder.itemView.setOnClickListener {
-                    bundle.putInt("BINNACLE_REPAIR_ID_KEY", repair.binnacleRepairId)
+                    bundle.putString("BINNACLE_REPAIR_ID_KEY", repair.binnacleRepairId)
                     bundle.putSerializable("REPAIR_KEY", repair)
+                    bundle.putString("BINNACLE_ID_KEY", mBinnacle.binnacleId)
                     findNavController().navigate(R.id.action_binnacleFragment_to_repairDetailsFragment, bundle)
                 }
             }
@@ -140,6 +141,7 @@ class BinnacleFragment : Fragment() {
                         val repair = tmp.getValue(RepairModel::class.java)
                         if (repair?.repairId == repairId) {
                             repairNameTxt.text = repair.repairName
+                            bundle.putString("REPAIR_NAME_KEY", repair.repairName)
                             repairsAdapter().notifyDataSetChanged()
                             break
                         } else {

@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
 import com.grupoqq.app.R
+import com.grupoqq.app.models.BinnacleModel
 import com.grupoqq.app.models.BinnacleRepairModel
 import com.grupoqq.app.models.ReportModel
 import com.grupoqq.app.utils.GenericAdapter
@@ -25,9 +26,10 @@ import kotlinx.android.synthetic.main.item_report.view.*
 
 class RepairDetailsFragment : Fragment() {
 
-    private var mBinnacleRepairId = 0
-    private lateinit var mBinnacleRepair: BinnacleRepairModel
+    private var binnacleRepairId = ""
     private var mReports = mutableListOf<ReportModel>()
+    private var repairName = ""
+    private var binnacleId = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -39,15 +41,15 @@ class RepairDetailsFragment : Fragment() {
 
         fetchArguments()
         setOnClickListeners()
+        getBinnacle()
         getReports()
-        setReportsRecyclerView()
-        loadBinnacleData()
 
     }
 
     private fun fetchArguments() {
-        mBinnacleRepairId = arguments?.getInt("BINNACLE_REPAIR_ID_KEY")!!
-        mBinnacleRepair = arguments?.getSerializable("REPAIR_KEY") as BinnacleRepairModel
+        binnacleRepairId = arguments?.getString("BINNACLE_REPAIR_ID_KEY")!!
+        repairName = arguments?.getString("REPAIR_NAME_KEY")!!
+        binnacleId = arguments?.getString("BINNACLE_ID_KEY")!!
     }
 
     private fun setOnClickListeners() {
@@ -57,7 +59,7 @@ class RepairDetailsFragment : Fragment() {
     }
 
     private fun getReports() {
-        getFirebaseReference("binnacle/0/repairs/$mBinnacleRepairId/reports").addValueEventListener(object: ValueEventListener {
+        getFirebaseReference("binnacle/$binnacleId/repairs/$binnacleRepairId/reports").addValueEventListener(object: ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (mReports.size > 0) mReports.clear()
 
@@ -94,20 +96,32 @@ class RepairDetailsFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun loadBinnacleData() {
-       // repairDetailNameTxt.text = mBinnacleRepair.repair?.repairName
-        if (mBinnacleRepair.isApproved) {
-            repairDetailStartDateTxt.text = "Fecha de inicio: ${mBinnacleRepair.binnacleRepairStartDate}"
+    private fun getBinnacle() {
+        getFirebaseReference("binnacle/$binnacleId/repairs/$binnacleRepairId").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    loadBinnacleData(p0.getValue(BinnacleRepairModel::class.java)!!)
+                }
+            }
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d("DEBUG", p0.message)
+            }
+        })
+    }
+
+    private fun loadBinnacleData(binnacleRepair: BinnacleRepairModel) {
+        repairDetailNameTxt.text = repairName
+        if (binnacleRepair.isApproved) {
+            repairDetailStartDateTxt.text = "Fecha de inicio: ${binnacleRepair.binnacleRepairStartDate}"
         } else {
             repairDetailStartDateTxt.text = "Sin aprobar"
         }
         var statusString = ""
-        statusString = when (mBinnacleRepair.binnacleRepairStatus) {
+        statusString = when (binnacleRepair.binnacleRepairStatus) {
             1 -> "Pendiente"
             2 -> "En progreso"
             else -> "Finalizado"
         }
         repairDetailStatusTxt.text = "Estado: $statusString"
     }
-
 }
