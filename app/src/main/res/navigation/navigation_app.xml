@@ -10,6 +10,15 @@
         android:id="@+id/welcomeFragment"
         android:name="com.grupoqq.app.fragments.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" />
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_searchBinnacleFragment"
+            app:destination="@id/searchBinnacleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchBinnacleFragment"
+        android:name="com.grupoqq.app.fragments.SearchBinnacleFragment"
+        android:label="fragment_search_binnacle"
+        tools:layout="@layout/fragment_search_binnacle" />
 
 </navigation>
