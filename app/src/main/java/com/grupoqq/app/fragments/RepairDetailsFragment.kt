@@ -28,6 +28,7 @@ class RepairDetailsFragment : Fragment() {
 
     private var binnacleRepairId = ""
     private var mReports = mutableListOf<ReportModel>()
+    private lateinit var mReportsAdapter: GenericAdapter<ReportModel>
     private var repairName = ""
     private var binnacleId = ""
 
@@ -42,6 +43,7 @@ class RepairDetailsFragment : Fragment() {
         fetchArguments()
         setOnClickListeners()
         getBinnacle()
+        setReportsRecyclerView()
         getReports()
 
     }
@@ -67,8 +69,7 @@ class RepairDetailsFragment : Fragment() {
                     for (tmp in p0.children) {
                         val report = tmp.getValue(ReportModel::class.java)
                         mReports.add(report!!)
-                        setReportsRecyclerView()
-                        reportsAdapter().notifyDataSetChanged()
+                        mReportsAdapter.notifyDataSetChanged()
                     }
                 }
             }
@@ -82,7 +83,8 @@ class RepairDetailsFragment : Fragment() {
 
     private fun setReportsRecyclerView() {
         reportsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        reportsRecyclerView.adapter = reportsAdapter()
+        mReportsAdapter = reportsAdapter()
+        reportsRecyclerView.adapter = mReportsAdapter
     }
 
     private fun reportsAdapter(): GenericAdapter<ReportModel> {
@@ -111,7 +113,7 @@ class RepairDetailsFragment : Fragment() {
 
     private fun loadBinnacleData(binnacleRepair: BinnacleRepairModel) {
         repairDetailNameTxt.text = repairName
-        if (binnacleRepair.isApproved) {
+        if (binnacleRepair.isApproved!!) {
             repairDetailStartDateTxt.text = "Fecha de inicio: ${binnacleRepair.binnacleRepairStartDate}"
         } else {
             repairDetailStartDateTxt.text = "Sin aprobar"

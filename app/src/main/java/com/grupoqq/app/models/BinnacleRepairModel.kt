@@ -7,7 +7,7 @@ data class BinnacleRepairModel(
     val repairId: String = "",
     val binnacleRepairStatus: Int = 0,
     val binnacleRepairStartDate: String = "",
-    val isApproved: Boolean = false,
-    val reports: List<ReportModel> = arrayListOf(),
+    val isApproved: Boolean?,
+    val reports: HashMap<String, ReportModel> = HashMap(),
     val binnacleSpareParts: List<SparePartModel> = arrayListOf()
 ) : Serializable

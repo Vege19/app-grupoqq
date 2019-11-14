@@ -3,8 +3,8 @@ package com.grupoqq.app.models
 import java.io.Serializable
 
 data class ReportModel(
-    val reportId: String = "",
-    val reportDescription: String = "",
-    val reportPicture: String = "",
-    val reportDateTime: String = ""
+    var reportId: String = "",
+    var reportDescription: String = "",
+    var reportPicture: String = "",
+    var reportDateTime: String = ""
 ) : Serializable

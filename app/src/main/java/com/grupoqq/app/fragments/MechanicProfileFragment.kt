@@ -29,6 +29,7 @@ class MechanicProfileFragment : Fragment() {
     private var mechanicId = "0"
     private var mMechanicBinnacles = mutableListOf<BinnacleModel>()
     private var mBinnacles = mutableListOf<BinnacleModel>()
+    private lateinit var mAdapter: GenericAdapter<BinnacleModel>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -38,10 +39,7 @@ class MechanicProfileFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if (mMechanicBinnacles.isNotEmpty()) {
-            mMechanicBinnacles.clear()
-        }
-
+        setMechanicBinnaclesRecyclerView()
         getMechanicData()
         getBinnacles()
 
@@ -81,11 +79,7 @@ class MechanicProfileFragment : Fragment() {
                             val mechanicBinnacle = tmp2.getValue(BinnacleModel::class.java)
                             if (tmp.binnacleId == mechanicBinnacle?.binnacleId) {
                                 mMechanicBinnacles.add(tmp)
-                                Log.d("debug", mMechanicBinnacles.toString())
-                                Log.d("debug", mBinnacles.toString())
-
-                                setMechanicBinnaclesRecyclerView()
-                                mechanicBinnaclesRecyclerViewAdapter().notifyDataSetChanged()
+                                mAdapter.notifyDataSetChanged()
                             }
                         }
                     }
@@ -104,11 +98,12 @@ class MechanicProfileFragment : Fragment() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+                if (mBinnacles.size > 0) mBinnacles.clear()
+
                 if (p0.exists()) {
                     for (tmp in p0.children) {
                         val binnacle = tmp.getValue(BinnacleModel::class.java)
                         mBinnacles.add(binnacle!!)
-                        Log.d("debug", mBinnacles.toString())
                         getMechanicBinnacles()
                     }
                 } else {
@@ -120,7 +115,8 @@ class MechanicProfileFragment : Fragment() {
 
     private fun setMechanicBinnaclesRecyclerView() {
         mechanicBinnaclesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        mechanicBinnaclesRecyclerView.adapter = mechanicBinnaclesRecyclerViewAdapter()
+        mAdapter = mechanicBinnaclesRecyclerViewAdapter()
+        mechanicBinnaclesRecyclerView.adapter = mAdapter
     }
 
     private fun mechanicBinnaclesRecyclerViewAdapter(): GenericAdapter<BinnacleModel> {

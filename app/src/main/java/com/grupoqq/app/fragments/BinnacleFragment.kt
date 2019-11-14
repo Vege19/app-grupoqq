@@ -102,7 +102,7 @@ class BinnacleFragment : Fragment() {
 
                 setRepairName(view.repairNameTxt, repair.repairId)
 
-                if (repair.isApproved) {
+                if (repair.isApproved!!) {
                     view.repairStartDate.text = repair.binnacleRepairStartDate
                 } else {
                     view.repairStartDate.text = "No aprobado"

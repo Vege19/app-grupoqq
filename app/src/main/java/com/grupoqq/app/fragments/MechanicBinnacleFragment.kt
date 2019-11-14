@@ -40,12 +40,12 @@ class MechanicBinnacleFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        setOnClickListeners()
         fetchArguments()
-        setBinnacleVehicleData()
-        setBinnacleClientData()
+        setOnClickListeners()
         setBinnacleRepairsRecyclerView()
         getBinnacleRepairs()
+        setBinnacleVehicleData()
+        setBinnacleClientData()
 
     }
 
@@ -100,6 +100,8 @@ class MechanicBinnacleFragment : Fragment() {
                 Log.d("Debug", p0.message)
             }
             override fun onDataChange(p0: DataSnapshot) {
+                if (mBinnacleRepairs.size > 0) mBinnacleRepairs.clear()
+
                 if (p0.exists()) {
                     for (tmp in p0.children) {
                         val repair = tmp.getValue(BinnacleRepairModel::class.java)
@@ -113,6 +115,7 @@ class MechanicBinnacleFragment : Fragment() {
 
     private fun setBinnacleRepairsRecyclerView() {
         binnacleRepairsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        mAdapter = mechanicBinnacleRepairsAdapter()
         binnacleRepairsRecyclerView.adapter = mAdapter
     }
 
@@ -136,7 +139,7 @@ class MechanicBinnacleFragment : Fragment() {
                 }
             }
             //Repair date
-            if (repair.isApproved) {
+            if (repair.isApproved!!) {
                 view.repairStartDate.text = repair.binnacleRepairStartDate
             } else {
                 view.repairStartDate.text = "No aprobado"
