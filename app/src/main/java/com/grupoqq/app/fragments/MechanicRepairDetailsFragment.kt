@@ -118,10 +118,6 @@ class MechanicRepairDetailsFragment : Fragment() {
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.exists()) {
                         val repair = p0.getValue(BinnacleRepairModel::class.java)
-                        repairDetailStatusTxt.text =
-                            if (repair?.binnacleRepairStatus == 1) "Pendiente"
-                            else if (repair?.binnacleRepairStatus == 2) "En progreso"
-                            else "Finalizado"
                         if (repair!!.isApproved!!) {
                             repairDetailStartDateTxt.text = repair?.binnacleRepairStartDate
                         } else {
