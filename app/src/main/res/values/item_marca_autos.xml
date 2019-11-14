@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="marca_autos">
+        <item>BMW</item>
+        <item>SUBARU</item>
+        <item>AUDI</item>
+        <item>HONDA</item>
+        <item>MAZDA</item>
+        <item>NISSAN</item>
+        <item>TOYOTA</item>
+        <item>MASERATI</item>
+        <item>LAMBORGINI</item>
+        <item>PORSCHE</item>
+        <item>FORD</item>
+        <item>CHEVROLET</item>
+        <item>ASTON MARTIN</item>
+        <item>MITSUBISHI</item>
+        <item>VOLKSWAGEN</item>
+        <item>MERCEDES-BENZ</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    BMW___YA_SERIE 1
+    SUBARU__YA__LEGACY
+    AUDI__ya__AUDI-A4
+    HONDA__YA__CIVIC
+    MAZDA__YA__CX-3
+    NISSAN__YA_MICRA
+    TOYOTA__YA__IQ
+    MASERATI__YA__Quattroporte
+    LAMBORGINI__YA__AVENTADOR
+    PORSCHE__YA_911
+    FORD__YA__B-MAX
+    CHEVROLET__ya__CHEVROLET-CAMARO
+    ASTON MARTIN__ya__DB9
+    MITSUBISHI__1__ASX
+    VOLKSWAGEN__YA_BEETLE
+    MERCEDES-BENZ__YA_CLASE A
+    -->
+    <string-array name="modelos_autos">
+        <item>DB9</item>
+        <item>AUDI-A4</item>
+        <item>CHEVROLET-CAMARO</item>
+        <item>B-MAX</item>
+        <item>CIVIC</item>
+        <item>AVENTADOR</item>
+        <item>QUATTROPORTE</item>
+        <item>ASX</item>
+        <item>MICRA</item>
+        <item>911</item>
+        <item>CLASE A</item>
+        <item>SERIE 1</item>
+        <item>CX-3</item>
+        <item>LEGACY</item>
+        <item>IQ</item>
+        <item>BEETLE</item>
+
+    </string-array>
+
+</resources>
