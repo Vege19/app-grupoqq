@@ -2,7 +2,6 @@ package com.grupoqq.app.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.renderscript.Sampler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,7 +20,6 @@ import com.grupoqq.app.models.*
 import com.grupoqq.app.utils.GenericAdapter
 import com.grupoqq.app.utils.getFirebaseReference
 import kotlinx.android.synthetic.main.fragment_binnacle.*
-import kotlinx.android.synthetic.main.item_repair.*
 import kotlinx.android.synthetic.main.item_repair.view.*
 import kotlinx.android.synthetic.main.item_repair.view.repairNameTxt
 
@@ -70,8 +68,8 @@ class BinnacleFragment : Fragment() {
     }
 
     private fun loadRepairsRecyclerView() {
-        binnancleRepairsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binnancleRepairsRecyclerView.adapter = repairsAdapter()
+        binnacleRepairsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binnacleRepairsRecyclerView.adapter = repairsAdapter()
     }
 
     private fun getBinnacleRepairs() {
@@ -103,7 +101,12 @@ class BinnacleFragment : Fragment() {
             if (mBinnacleRepairs.isNotEmpty()) {
 
                 setRepairName(view.repairNameTxt, repair.repairId)
-                view.repairStartDate.text = repair.binnacleRepairStartDate
+
+                if (repair.isApproved) {
+                    view.repairStartDate.text = repair.binnacleRepairStartDate
+                } else {
+                    view.repairStartDate.text = "No aprobado"
+                }
 
                 when (repair.binnacleRepairStatus) {
                     1 -> {

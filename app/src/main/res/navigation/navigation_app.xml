@@ -45,6 +45,22 @@
         android:id="@+id/mechanicProfileFragment"
         android:name="com.grupoqq.app.fragments.MechanicProfileFragment"
         android:label="fragment_mechanic_profile"
-        tools:layout="@layout/fragment_mechanic_profile" />
+        tools:layout="@layout/fragment_mechanic_profile" >
+        <action
+            android:id="@+id/action_mechanicProfileFragment_to_mechanicBinnacleFragment"
+            app:destination="@id/mechanicBinnacleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mechanicBinnacleFragment"
+        android:name="com.grupoqq.app.fragments.MechanicBinnacleFragment"
+        android:label="MechanicBinnacleFragment" >
+        <action
+            android:id="@+id/action_mechanicBinnacleFragment_to_mechanicRepairDetailsFragment"
+            app:destination="@id/mechanicRepairDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mechanicRepairDetailsFragment"
+        android:name="com.grupoqq.app.fragments.MechanicRepairDetailsFragment"
+        android:label="MechanicRepairDetailsFragment" />
 
 </navigation>
