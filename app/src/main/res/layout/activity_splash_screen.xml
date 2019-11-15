@@ -9,12 +9,12 @@
     tools:context=".activities.SplashScreenActivity">
 
     <ImageView
-        android:layout_width="320dp"
-        android:layout_height="197dp"
+        android:layout_width="233dp"
+        android:layout_height="131dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/vc_logo" />
+        app:srcCompat="@drawable/ic_vc_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

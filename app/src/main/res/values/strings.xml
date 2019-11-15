@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Grupo QQ</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todo">TODO</string>
+    <string name="welcome_admin_option">Ingresar como administrador</string>
+    <string name="admin_title">Administración</string>
+    <string name="admin_tab_binnacles">Bitácoras</string>
+    <string name="admin_tab_clients">Clientes</string>
+    <string name="admin_tab_mechanics">Mecánicos</string>
 </resources>
