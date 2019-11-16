@@ -1,6 +1,5 @@
 package com.grupoqq.app.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.widget.ImageView

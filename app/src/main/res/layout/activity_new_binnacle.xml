@@ -158,7 +158,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/newBinnaclePlaca"
+                        android:id="@+id/newBinnacleRegNumTil"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
                         app:layout_constraintStart_toStartOf="parent">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/newBinnacleInputPlacaTxt"
+                            android:id="@+id/newBinnacleInputRegNumTxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Matrícula"
@@ -314,7 +314,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/newBinnacleServicesRv"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:clipToPadding="false"
                         android:overScrollMode="never"
                         android:paddingBottom="16dp"
@@ -336,7 +336,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardview3"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="16dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -394,6 +393,18 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addNewBinnacleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cardview4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="16dp"
+                android:text="nueva bitácora"
+                android:layout_marginBottom="16dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
