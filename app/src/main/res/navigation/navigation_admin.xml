@@ -9,5 +9,23 @@
         android:id="@+id/adminBinnaclesFragment"
         android:name="com.grupoqq.app.fragments.AdminBinnaclesFragment"
         android:label="fragment_admin_binnacles"
-        tools:layout="@layout/fragment_admin_binnacles" />
+        tools:layout="@layout/fragment_admin_binnacles" >
+        <action
+            android:id="@+id/action_adminBinnaclesFragment_to_adminClientsFragment"
+            app:destination="@id/adminClientsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminClientsFragment"
+        android:name="com.grupoqq.app.fragments.AdminClientsFragment"
+        android:label="fragment_admin_clients"
+        tools:layout="@layout/fragment_admin_clients" >
+        <action
+            android:id="@+id/action_adminClientsFragment_to_adminMechanicsFragments"
+            app:destination="@id/adminMechanicsFragments" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminMechanicsFragments"
+        android:name="com.grupoqq.app.fragments.AdminMechanicsFragments"
+        android:label="fragment_admin_mechanics_fragments"
+        tools:layout="@layout/fragment_admin_mechanics_fragments" />
 </navigation>

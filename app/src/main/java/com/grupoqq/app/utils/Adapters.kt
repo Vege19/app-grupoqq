@@ -7,8 +7,10 @@ import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.grupoqq.app.R
 import com.grupoqq.app.activities.NewBinnacleActivity
+import com.grupoqq.app.models.BinnacleModel
 import com.grupoqq.app.models.MechanicModel
 import com.grupoqq.app.models.ServiceModel
+import kotlinx.android.synthetic.main.item_binnacle.view.*
 import kotlinx.android.synthetic.main.item_mechanic.view.*
 import kotlinx.android.synthetic.main.item_service.view.*
 
@@ -54,5 +56,12 @@ fun ServiceAdapter(services: List<ServiceModel>, selectedServices: MutableList<S
                 }*/
             }
         }
+    })
+}
+
+fun BinnacleAdapter(binnacles: List<BinnacleModel>): GenericAdapter<BinnacleModel> {
+    return GenericAdapter(R.layout.item_binnacle, binnacles, fun (viewHolder, view, binnacle, _) {
+        view.itemBinnacleIdTxt.text = binnacle.binnacleId
+        view.itemBinnacleClientNameTxt.text = "Cliente: ${binnacle.client.clientNames}"
     })
 }
