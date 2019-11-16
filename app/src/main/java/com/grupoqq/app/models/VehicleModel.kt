@@ -5,5 +5,6 @@ data class VehicleModel(
     var vehicleBrand: String = "",
     var vehicleModel: String = "",
     var vehicleYear: String = "",
+    var vehicleRegistrationNumber: String = "",
     var client: ClientModel = ClientModel()
 )

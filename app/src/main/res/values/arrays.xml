@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brands">
+        <item>Toyota</item>
+        <item>Honda</item>
+        <item>Hyundai</item>
+        <item>Nissan</item>
+        <item>Mitsubishi</item>
+    </string-array>
+
+    <string-array name="toyota_models">
+        <item>Yaris</item>
+        <item>Corolla</item>
+        <item>Camry</item>
+        <item>Hilux</item>
+        <item>GT86</item>
+    </string-array>
+
+    <string-array name="honda_models">
+        <item>Civic</item>
+        <item>Accord</item>
+        <item>Fit</item>
+        <item>CR-V</item>
+        <item>Jazz</item>
+    </string-array>
+
+    <string-array name="hyundai_models">
+        <item>Elantra</item>
+        <item>Accent</item>
+        <item>Tucson</item>
+        <item>Santa Fe</item>
+        <item>NEXO</item>
+    </string-array>
+
+    <string-array name="nissan_models">
+        <item>GT-R</item>
+        <item>Sentra</item>
+        <item>Cube</item>
+        <item>NP300 Navara</item>
+        <item>370Z</item>
+    </string-array>
+
+    <string-array name="mitsubishi_models">
+        <item>Lancer</item>
+        <item>Outlander</item>
+        <item>Space Star</item>
+        <item>Montero</item>
+        <item>L200</item>
+    </string-array>
+
+</resources>
