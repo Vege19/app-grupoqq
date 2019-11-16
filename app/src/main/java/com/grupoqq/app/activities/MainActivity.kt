@@ -3,7 +3,10 @@ package com.grupoqq.app.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.database.FirebaseDatabase
 import com.grupoqq.app.R
+import com.grupoqq.app.models.MechanicModel
+import com.grupoqq.app.models.ServiceModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
