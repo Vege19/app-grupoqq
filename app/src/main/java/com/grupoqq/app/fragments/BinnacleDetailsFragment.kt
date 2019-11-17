@@ -56,7 +56,7 @@ class BinnacleDetailsFragment : Fragment() {
         //Vehicle info
         binnacleDetailsBrandTxt.text = "Marca: " + binnacle.vehicle.vehicleBrand
         binnacleDetailsModelTxt.text = "Modelo: " + binnacle.vehicle.vehicleModel
-        binnacleDetailsYearTxt.text = "Año:" + binnacle.vehicle.vehicleYear
+        binnacleDetailsYearTxt.text = "Año: " + binnacle.vehicle.vehicleYear
         binnacleDetailsRegistrationNumberTxt.text = "Matrícula: " + binnacle.vehicle.vehicleRegistrationNumber
         //Client info
         binnacleDetailsClientNameTxt.text = "Nombre: " + binnacle.client.clientNames

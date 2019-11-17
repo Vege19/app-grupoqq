@@ -1,6 +1,7 @@
 package com.grupoqq.app.utils
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,6 +10,7 @@ import com.grupoqq.app.R
 import com.grupoqq.app.activities.NewBinnacleActivity
 import com.grupoqq.app.models.*
 import kotlinx.android.synthetic.main.item_binnacle.view.*
+import kotlinx.android.synthetic.main.item_binnacle_service.view.*
 import kotlinx.android.synthetic.main.item_client.view.*
 import kotlinx.android.synthetic.main.item_mechanic.view.*
 import kotlinx.android.synthetic.main.item_service.view.*
@@ -78,5 +80,23 @@ fun VehicleAdapter(vehicles: List<VehicleModel>, context: Context): GenericAdapt
     return GenericAdapter(R.layout.item_vehicle, vehicles, fun (viewHolder, view, vehicle, _) {
         view.itemVehicleNameTxt.text = "${vehicle.vehicleBrand} ${vehicle.vehicleModel} ${vehicle.vehicleYear}"
         view.itemVehicleRegistrationNumberTxt.text = "Matrícula: ${vehicle.vehicleRegistrationNumber}"
+    })
+}
+
+fun BinnacleServiceAdapter(binnacleServices: List<BinnacleServiceModel>, context: Context): GenericAdapter<BinnacleServiceModel> {
+    return GenericAdapter(R.layout.item_binnacle_service, binnacleServices, fun (viewHolder, view, binnacleService, _) {
+        view.itemBinnacleServiceNameTxt.text = binnacleService.service.serviceName
+        //status color
+        when (binnacleService.binnacleServiceStatus) {
+            1 -> view.itemBinnacleServiceStatusTxt.setTextColor(Color.RED)
+            2 -> view.itemBinnacleServiceStatusTxt.setTextColor(Color.GREEN)
+            else -> view.itemBinnacleServiceStatusTxt.setTextColor(Color.GRAY)
+        }
+        //status text
+        view.itemBinnacleServiceStatusTxt.text = when (binnacleService.binnacleServiceStatus) {
+            1 -> "Pendiente de aprobación"
+            2 -> "En proceso"
+            else -> "Finalizado"
+        }
     })
 }
