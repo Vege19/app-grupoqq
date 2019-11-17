@@ -50,7 +50,7 @@ class AdminBinnaclesFragment : Fragment() {
     }
 
     private fun binnacleRecyclerViewSetup() {
-        binnacleAdapter = BinnacleAdapter(binnacles)
+        binnacleAdapter = BinnacleAdapter(binnacles, requireContext())
         adminBinnaclesRv.layoutManager = LinearLayoutManager(requireContext())
         adminBinnaclesRv.adapter = binnacleAdapter
     }

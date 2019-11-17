@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.grupoqq.app.R
+import com.grupoqq.app.activities.BinnacleActivity
 import com.grupoqq.app.activities.NewBinnacleActivity
 import com.grupoqq.app.activities.ReportsActivity
 import com.grupoqq.app.models.*
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.item_binnacle_service.view.*
 import kotlinx.android.synthetic.main.item_client.view.*
 import kotlinx.android.synthetic.main.item_mechanic.view.*
 import kotlinx.android.synthetic.main.item_service.view.*
+import kotlinx.android.synthetic.main.item_sparepart.view.*
 import kotlinx.android.synthetic.main.item_vehicle.view.*
 
 
@@ -67,10 +69,13 @@ fun ServiceAdapter(services: List<ServiceModel>, selectedServices: MutableList<S
     })
 }
 
-fun BinnacleAdapter(binnacles: List<BinnacleModel>): GenericAdapter<BinnacleModel> {
+fun BinnacleAdapter(binnacles: List<BinnacleModel>, context: Context, isMechanic: Boolean = false): GenericAdapter<BinnacleModel> {
     return GenericAdapter(R.layout.item_binnacle, binnacles, fun (viewHolder, view, binnacle, _) {
         view.itemBinnacleIdTxt.text = binnacle.binnacleId
         view.itemBinnacleClientNameTxt.text = "Cliente: ${binnacle.client.clientNames}"
+        viewHolder.itemView.setOnClickListener {
+            context.startActivity(Intent(context, BinnacleActivity::class.java).putExtra("BINNACLE_KEY", binnacle.binnacleId).putExtra("IS_MECHANIC", isMechanic))
+        }
     })
 }
 
@@ -87,7 +92,7 @@ fun VehicleAdapter(vehicles: List<VehicleModel>, context: Context): GenericAdapt
     })
 }
 
-fun BinnacleServiceAdapter(binnacleServices: List<BinnacleServiceModel>, context: Context): GenericAdapter<BinnacleServiceModel> {
+fun BinnacleServiceAdapter(binnacleServices: List<BinnacleServiceModel>, context: Context, isMechanic: Boolean = false): GenericAdapter<BinnacleServiceModel> {
     return GenericAdapter(R.layout.item_binnacle_service, binnacleServices, fun (viewHolder, view, binnacleService, _) {
         view.itemBinnacleServiceNameTxt.text = binnacleService.service.serviceName
         //status color
@@ -106,7 +111,7 @@ fun BinnacleServiceAdapter(binnacleServices: List<BinnacleServiceModel>, context
         }
         //Intent
         viewHolder.itemView.setOnClickListener {
-            if (binnacleService.binnacleServiceStatus != 1) {
+            if (binnacleService.binnacleServiceStatus != 1 || isMechanic) {
                 val intent = Intent(context, ReportsActivity::class.java)
                 intent.putExtra("BINNACLE_SERVICE_KEY", binnacleService.binnacleServiceId)
                 context.startActivity(intent)
@@ -114,5 +119,27 @@ fun BinnacleServiceAdapter(binnacleServices: List<BinnacleServiceModel>, context
                 showToast(context, "Este servicio se encuentra aún en revisión por parte del mecánico", Toast.LENGTH_LONG)
             }
         }
+    })
+}
+
+fun SparePartAdapter(spareParts: List<SparePartModel>, context: Context, isMechanic: Boolean = false, selectedSpareParts: MutableList<SparePartModel>): GenericAdapter<SparePartModel> {
+    return GenericAdapter(R.layout.item_sparepart, spareParts, fun (viewHolder, view, sparePart, _) {
+        view.itemSparePartImg.setGlideImage(context, sparePart.sparePartPhoto)
+        view.itemSparePartNameTxt.text = sparePart.sparePartName
+        view.itemSparePartPriceTxt.text = "$${sparePart.sparePartPrice}"
+
+        if (isMechanic) {
+            view.itemSparePartCheckBox.makeVisible()
+            view.itemSparePartCheckBox.setOnClickListener {
+                if (view.itemSparePartCheckBox.isChecked) {
+                    Log.d("Debug", "${sparePart.sparePartName} isChecked")
+                    selectedSpareParts.add(sparePart)
+                } else {
+                    Log.d("Debug", "${sparePart.sparePartName} isUnchecked")
+                    selectedSpareParts.remove(sparePart)
+                }
+            }
+        }
+
     })
 }

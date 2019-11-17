@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener
 
 import com.grupoqq.app.R
 import com.grupoqq.app.activities.BinnacleActivity
+import com.grupoqq.app.activities.MechanicActivity
 import com.grupoqq.app.models.BinnacleServiceModel
 import com.grupoqq.app.utils.BinnacleServiceAdapter
 import com.grupoqq.app.utils.GenericAdapter
@@ -40,7 +41,11 @@ class BinnacleServicesFragment : Fragment() {
     }
 
     private fun binnacleServicesRecyclerViewSetup() {
-        binnacleServiceAdapter = BinnacleServiceAdapter(binnacleServices, requireContext())
+        if (BinnacleActivity.isMechanic) {
+            binnacleServiceAdapter = BinnacleServiceAdapter(binnacleServices, requireContext(), isMechanic = true)
+        } else {
+            binnacleServiceAdapter = BinnacleServiceAdapter(binnacleServices, requireContext(), isMechanic = false)
+        }
         binnacleServicesRv.layoutManager = LinearLayoutManager(requireContext())
         binnacleServicesRv.adapter = binnacleServiceAdapter
     }

@@ -13,11 +13,13 @@ class BinnacleActivity : AppCompatActivity() {
 
     companion object {
         var binnacleId = ""
+        var isMechanic = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_binnacle)
+        isMechanic = intent?.getBooleanExtra("IS_MECHANIC", false)!!
 
         toolbarSetup()
         tabsSetup()

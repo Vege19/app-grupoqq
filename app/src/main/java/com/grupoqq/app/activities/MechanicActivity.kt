@@ -12,9 +12,15 @@ import kotlinx.android.synthetic.main.layout_actionbar.view.*
 
 class MechanicActivity : AppCompatActivity() {
 
+    companion object {
+        var mechanicId = ""
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mechanic)
+        mechanicId = intent.getStringExtra("MECHANIC_KEY")!!
+
         toolbarSetup()
         tabsSetup()
     }

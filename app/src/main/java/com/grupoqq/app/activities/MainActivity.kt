@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setOnClickListeners()
-        
+
     }
 
     private fun setOnClickListeners() {

@@ -14,8 +14,10 @@ import com.google.firebase.database.ValueEventListener
 import com.grupoqq.app.R
 import com.grupoqq.app.activities.BinnacleActivity
 import com.grupoqq.app.models.BinnacleModel
+import com.grupoqq.app.utils.makeGone
 import com.grupoqq.app.utils.setGlideImage
 import com.grupoqq.app.utils.showToast
+import kotlinx.android.synthetic.main.activity_new_binnacle.*
 import kotlinx.android.synthetic.main.fragment_binnacle_details.*
 
 class BinnacleDetailsFragment : Fragment() {
@@ -36,7 +38,7 @@ class BinnacleDetailsFragment : Fragment() {
     }
 
     private fun getBinnacle() {
-        binnaclesReferences.child(BinnacleActivity.binnacleId).addValueEventListener(object : ValueEventListener {
+        binnaclesReferences.child(BinnacleActivity.binnacleId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 showToast(requireContext(), p0.message)
             }
@@ -63,9 +65,13 @@ class BinnacleDetailsFragment : Fragment() {
         binnacleDetailsClientEmailTxt.text = "Correo electrónico: " + binnacle.client.clientEmail
         binnacleDetailsClientPhoneTxt.text = "Teléfono: " + binnacle.client.clientPhone
         //Mechanic info
-        binnacleDetailsMechanicImg.setGlideImage(requireContext(), binnacle.mechanic.mechanicPhoto, true)
-        binnacleDetailsMechanicNameTxt.text = binnacle.mechanic.mechanicNames
-        binnacleDetailsMechanicPhoneTxt.text = "Teléfono: " + binnacle.mechanic.mechanicPhone
+        if (BinnacleActivity.isMechanic) {
+            cardView4.makeGone()
+        } else {
+            binnacleDetailsMechanicImg.setGlideImage(requireContext(), binnacle.mechanic.mechanicPhoto, true)
+            binnacleDetailsMechanicNameTxt.text = binnacle.mechanic.mechanicNames
+            binnacleDetailsMechanicPhoneTxt.text = "Teléfono: " + binnacle.mechanic.mechanicPhone
+        }
 
     }
 
