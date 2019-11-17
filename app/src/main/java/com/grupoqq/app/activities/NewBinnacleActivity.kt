@@ -137,7 +137,7 @@ class NewBinnacleActivity : AppCompatActivity() {
                     //Vehicle validations
                      val vehicleBrand = brandSpinner.selectedItem.toString()
                      val vehicleModel = modelSpinner.selectedItem.toString()
-                     val vehicleYear = modelSpinner.selectedItem.toString()
+                     val vehicleYear = yearSpinner.selectedItem.toString()
                     val vehicleRegistrationNumber = newBinnacleInputRegNumTxt.text.toString().trim()
 
                     if (vehicleRegistrationNumber.isEmpty()) {

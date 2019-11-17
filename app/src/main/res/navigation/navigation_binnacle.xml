@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_binnacle"
+    app:startDestination="@id/binnacleDetailsFragment">
+    <fragment
+        android:id="@+id/binnacleDetailsFragment"
+        android:name="com.grupoqq.app.fragments.BinnacleDetailsFragment"
+        android:label="fragment_binnacle_details"
+        tools:layout="@layout/fragment_binnacle_details" >
+        <action
+            android:id="@+id/action_binnacleDetailsFragment_to_binnacleServicesFragment"
+            app:destination="@id/binnacleServicesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/binnacleServicesFragment"
+        android:name="com.grupoqq.app.fragments.BinnacleServicesFragment"
+        android:label="fragment_binnacle_services"
+        tools:layout="@layout/fragment_binnacle_services" />
+</navigation>

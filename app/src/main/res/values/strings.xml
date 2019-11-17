@@ -7,4 +7,7 @@
     <string name="admin_tab_binnacles">Bitácoras</string>
     <string name="admin_tab_clients">Clientes</string>
     <string name="admin_tab_mechanics">Mecánicos</string>
+    <string name="welcome_request_option">Consultar bitácora</string>
+    <string name="welcome_mechanic_option">Ingresar como mecánico</string>
+
 </resources>

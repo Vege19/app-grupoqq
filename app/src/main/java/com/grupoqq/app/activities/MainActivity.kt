@@ -24,6 +24,20 @@ class MainActivity : AppCompatActivity() {
         cardOptionOne.setOnClickListener {
             startActivity(Intent(this, AdminActivity::class.java))
         }
+
+        cardOptionTwo.setOnClickListener {
+           intentToCodeInput(false)
+        }
+
+        cardOptionThree.setOnClickListener {
+            intentToCodeInput(true)
+        }
+    }
+
+    private fun intentToCodeInput(isMechanic: Boolean) {
+        val intent = Intent(this, InputCodeActivity::class.java)
+        intent.putExtra("IS_MECHANIC", isMechanic)
+        startActivity(intent)
     }
 
 }
