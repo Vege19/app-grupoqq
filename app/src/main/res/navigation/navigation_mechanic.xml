@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_mechanic"
+    app:startDestination="@id/mechanicProfileFragment">
+    <fragment
+        android:id="@+id/mechanicBinnaclesFragment"
+        android:name="com.grupoqq.app.fragments.MechanicBinnaclesFragment"
+        android:label="fragment_mechanic_binnacles"
+        tools:layout="@layout/fragment_mechanic_binnacles" />
+    <fragment
+        android:id="@+id/mechanicProfileFragment"
+        android:name="com.grupoqq.app.fragments.MechanicProfileFragment"
+        android:label="fragment_mechanic_profile"
+        tools:layout="@layout/fragment_mechanic_profile" >
+        <action
+            android:id="@+id/action_mechanicProfileFragment_to_mechanicBinnaclesFragment"
+            app:destination="@id/mechanicBinnaclesFragment" />
+    </fragment>
+</navigation>

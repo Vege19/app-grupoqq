@@ -15,8 +15,8 @@ fun View.makeGone() {
     this.visibility = View.GONE
 }
 
-fun showToast(context: Context, message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+fun showToast(context: Context, message: String, length: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(context, message, length).show()
 }
 
 fun ImageView.setGlideImage(context: Context, url: String, circleCrop: Boolean = false) {
@@ -26,4 +26,5 @@ fun ImageView.setGlideImage(context: Context, url: String, circleCrop: Boolean =
         Glide.with(context).load(url).into(this)
     }
 }
+
 

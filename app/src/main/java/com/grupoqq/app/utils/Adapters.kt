@@ -1,13 +1,17 @@
 package com.grupoqq.app.utils
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.grupoqq.app.R
 import com.grupoqq.app.activities.NewBinnacleActivity
+import com.grupoqq.app.activities.ReportsActivity
 import com.grupoqq.app.models.*
 import kotlinx.android.synthetic.main.item_binnacle.view.*
 import kotlinx.android.synthetic.main.item_binnacle_service.view.*
@@ -88,15 +92,27 @@ fun BinnacleServiceAdapter(binnacleServices: List<BinnacleServiceModel>, context
         view.itemBinnacleServiceNameTxt.text = binnacleService.service.serviceName
         //status color
         when (binnacleService.binnacleServiceStatus) {
-            1 -> view.itemBinnacleServiceStatusTxt.setTextColor(Color.RED)
-            2 -> view.itemBinnacleServiceStatusTxt.setTextColor(Color.GREEN)
+            1 -> view.itemBinnacleServiceStatusTxt.setTextColor(ContextCompat.getColor(context, R.color.colorLight))
+            2 -> view.itemBinnacleServiceStatusTxt.setTextColor(Color.RED)
+            3 -> view.itemBinnacleServiceStatusTxt.setTextColor(Color.GREEN)
             else -> view.itemBinnacleServiceStatusTxt.setTextColor(Color.GRAY)
         }
         //status text
         view.itemBinnacleServiceStatusTxt.text = when (binnacleService.binnacleServiceStatus) {
-            1 -> "Pendiente de aprobación"
-            2 -> "En proceso"
+            1 -> "Pendiente de revisión"
+            2 -> "Pendiente de aprobación"
+            3 -> "En proceso"
             else -> "Finalizado"
+        }
+        //Intent
+        viewHolder.itemView.setOnClickListener {
+            if (binnacleService.binnacleServiceStatus != 1) {
+                val intent = Intent(context, ReportsActivity::class.java)
+                intent.putExtra("BINNACLE_SERVICE_KEY", binnacleService.binnacleServiceId)
+                context.startActivity(intent)
+            } else {
+                showToast(context, "Este servicio se encuentra aún en revisión por parte del mecánico", Toast.LENGTH_LONG)
+            }
         }
     })
 }
