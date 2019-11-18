@@ -47,4 +47,8 @@ class MechanicActivity : AppCompatActivity() {
         })
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
 }

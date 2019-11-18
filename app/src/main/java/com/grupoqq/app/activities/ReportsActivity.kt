@@ -134,11 +134,11 @@ class ReportsActivity : AppCompatActivity() {
     private fun verifyStatus(status: Int) {
         //If mechanic has to send to client which spare parts he need to use
         if (status == 1 && BinnacleActivity.isMechanic) {
+            finishServiceBtn.makeGone()
             sparePartServiceLayout.makeVisible()
             addNewReportFab.makeGone()
             sparePartServiceLayout.serviceSparePartsBtn.text = "ENVIAR"
-            sparePartServiceLayout.textView.text =
-                "Selecciona los productos y repuestos necesarios para realizar este servicio."
+            sparePartServiceLayout.textView.text = "Selecciona los productos y repuestos necesarios para realizar este servicio."
             sparePartsRecyclerViewSetup(spareParts, true)
             getSpareParts()
             sparePartServiceLayout.serviceSparePartsBtn.setOnClickListener {
@@ -160,6 +160,7 @@ class ReportsActivity : AppCompatActivity() {
         }
         //If mechanic finished and client is in wait to approve
         else if (status == 2 && BinnacleActivity.isMechanic) {
+            finishServiceBtn.makeGone()
             sparePartServiceLayout.makeGone()
             reportsMessageText.makeVisible()
             reportsMessageText.text =
@@ -167,6 +168,7 @@ class ReportsActivity : AppCompatActivity() {
         }
         //If the mechanic already sent spare parts
         else if (status == 2 && !BinnacleActivity.isMechanic) {
+            finishServiceBtn.makeGone()
             sparePartServiceLayout.makeVisible()
             addNewReportFab.makeGone()
             sparePartServiceLayout.serviceSparePartsBtn.text = "APROBAR"
@@ -182,6 +184,14 @@ class ReportsActivity : AppCompatActivity() {
             reportsMessageText.makeGone()
             reportsRv.makeVisible()
             addNewReportFab.makeVisible()
+            finishServiceBtn.makeGone()
+            if (reports.size > 0) {
+                finishServiceBtn.makeVisible()
+                finishServiceBtn.setOnClickListener {
+                    binnacleServicesReference.child("binnacleServiceStatus").setValue(4)
+                    showToast(baseContext, "Has dado por terminado este servicio.")
+                }
+            }
             addNewReportFab.setOnClickListener {
                 showBottomSheet()
             }
@@ -191,6 +201,24 @@ class ReportsActivity : AppCompatActivity() {
             sparePartServiceLayout.makeGone()
             reportsMessageText.makeGone()
             addNewReportFab.makeGone()
+            finishServiceBtn.makeGone()
+            reportsRv.makeVisible()
+        }
+        //If service is already ended mechanic can't summit reports anymore
+        else if (status == 4 && BinnacleActivity.isMechanic) {
+            reportsToolbar.toolbar.title = "Reportes (FINALIZADO)"
+            sparePartServiceLayout.makeGone()
+            reportsMessageText.makeGone()
+            addNewReportFab.makeGone()
+            finishServiceBtn.makeGone()
+            reportsRv.makeVisible()
+        }
+        else if (status == 4 && !BinnacleActivity.isMechanic) {
+            reportsToolbar.toolbar.title = "Reportes (FINALIZADO)"
+            sparePartServiceLayout.makeGone()
+            reportsMessageText.makeGone()
+            addNewReportFab.makeGone()
+            finishServiceBtn.makeGone()
             reportsRv.makeVisible()
         }
     }
