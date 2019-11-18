@@ -186,8 +186,6 @@ class NewBinnacleActivity : AppCompatActivity() {
                                 mechanicsReference.child(newMechanic.mechanicId).child("mechanicBinnacles").child(mechanicBinnacleId!!).setValue(newBinnacle)
                                 //Load binnacle services
                                 for (tmp in selectedServices) {
-                                    //Fill quotation list
-                                    quotation.add(QuotationModel(tmp.serviceName, tmp.serviceCost))
                                     //Binnacle services
                                     val binnacleServiceId = binnaclesReference.child(binnacleId)
                                         .child("binnacleServices").push().key

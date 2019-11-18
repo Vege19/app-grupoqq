@@ -81,7 +81,7 @@ class BinnacleDetailsFragment : Fragment() {
 
     private fun quotationListRecyclerViewSetup() {
         quotationRv.layoutManager = LinearLayoutManager(requireContext())
-        quotationAdapter = QuotationAdapter(quotationList)
+        quotationAdapter = QuotationAdapter(quotationList, requireContext())
         quotationRv.adapter = quotationAdapter
 
     }

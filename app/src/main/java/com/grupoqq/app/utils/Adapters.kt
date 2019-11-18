@@ -161,7 +161,7 @@ fun ReportAdapter(reports: List<ReportModel>, context: Context): GenericAdapter<
 
 }
 
-fun QuotationAdapter(quotationList: List<QuotationModel>): GenericAdapter<QuotationModel> {
+fun QuotationAdapter(quotationList: List<QuotationModel>, context: Context): GenericAdapter<QuotationModel> {
     return GenericAdapter(R.layout.item_quotation, quotationList, fun (viewholder, view, quotation, _) {
         view.itemQuotationNameTxt.text = quotation.quotationName
         view.itemQuotationPriceTxt.text = "$${quotation.quotationCost}"

@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.grupoqq.app.R
 import com.grupoqq.app.models.BinnacleServiceModel
+import com.grupoqq.app.models.QuotationModel
 import com.grupoqq.app.models.ReportModel
 import com.grupoqq.app.models.SparePartModel
 import com.grupoqq.app.utils.*
@@ -53,6 +54,8 @@ class ReportsActivity : AppCompatActivity() {
     private var reports = mutableListOf<ReportModel>()
     private lateinit var reportAdapter: GenericAdapter<ReportModel>
     private lateinit var progressDialog: AlertDialog
+    private var binnacleReference = FirebaseDatabase.getInstance().getReference("binnacles/${BinnacleActivity.binnacleId}")
+    private var quotationList = mutableListOf<QuotationModel>()
 
     private lateinit var bottomSheet: BottomSheetDialog
     private lateinit var bottomSheetView: View
@@ -124,14 +127,14 @@ class ReportsActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
                     val binnacleService = p0.getValue(BinnacleServiceModel::class.java)
-                    verifyStatus(binnacleService?.binnacleServiceStatus!!)
+                    verifyStatus(binnacleService?.binnacleServiceStatus!!, binnacleService)
                 }
             }
 
         })
     }
 
-    private fun verifyStatus(status: Int) {
+    private fun verifyStatus(status: Int, binnacleService: BinnacleServiceModel) {
         //If mechanic has to send to client which spare parts he need to use
         if (status == 1 && BinnacleActivity.isMechanic) {
             finishServiceBtn.makeGone()
@@ -162,6 +165,7 @@ class ReportsActivity : AppCompatActivity() {
         else if (status == 2 && BinnacleActivity.isMechanic) {
             finishServiceBtn.makeGone()
             sparePartServiceLayout.makeGone()
+            addNewReportFab.makeGone()
             reportsMessageText.makeVisible()
             reportsMessageText.text =
                 "Este servicio se encuentra en espera de aprobación por parte del cliente."
@@ -175,7 +179,11 @@ class ReportsActivity : AppCompatActivity() {
             sparePartsRecyclerViewSetup(selectedSpareParts, isMechanic = false)
             getBinnacleServiceSpareParts()
             sparePartServiceLayout.serviceSparePartsBtn.setOnClickListener {
+                updateQuotation(BinnacleActivity.binnacleId, QuotationModel(binnacleService.service.serviceName, binnacleService.service.serviceCost))
+                addSparePartToQuotation(BinnacleActivity.binnacleId, binnacleServiceId)
+
                 binnacleServicesReference.child("binnacleServiceStatus").setValue(3)
+                //Sum service cost
             }
         }
         //If client approved, mechanic can add reports
@@ -356,7 +364,7 @@ class ReportsActivity : AppCompatActivity() {
         storageReference.child("photos").child(photoUri?.lastPathSegment!!).putFile(photoUri!!)
             .addOnSuccessListener(object : OnSuccessListener<UploadTask.TaskSnapshot> {
                 override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
-                    showToast(baseContext, "Succeded")
+                    //showToast(baseContext, "Succeded")
                     storageReference.child("photos").child(photoUri?.lastPathSegment!!).downloadUrl.addOnSuccessListener(object: OnSuccessListener<Uri> {
                         override fun onSuccess(p0: Uri?) {
                             val id = binnacleServicesReference.child("reports").push().key
