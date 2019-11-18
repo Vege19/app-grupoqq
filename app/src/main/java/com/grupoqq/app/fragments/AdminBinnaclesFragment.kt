@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabItem
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.DataSnapshot
@@ -16,9 +18,8 @@ import com.google.firebase.database.ValueEventListener
 import com.grupoqq.app.R
 import com.grupoqq.app.activities.NewBinnacleActivity
 import com.grupoqq.app.models.BinnacleModel
-import com.grupoqq.app.utils.BinnacleAdapter
-import com.grupoqq.app.utils.GenericAdapter
-import com.grupoqq.app.utils.showToast
+import com.grupoqq.app.utils.*
+import kotlinx.android.synthetic.main.dialog_progress.*
 import kotlinx.android.synthetic.main.fragment_admin_binnacles.*
 import kotlinx.android.synthetic.main.layout_actionbar.view.*
 
@@ -56,6 +57,7 @@ class AdminBinnaclesFragment : Fragment() {
     }
 
     private fun getBinnacles() {
+        adminBinnaclesProgressBar.makeVisible()
         binnacleReference.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 showToast(requireContext(), p0.message)
@@ -69,6 +71,7 @@ class AdminBinnaclesFragment : Fragment() {
                         val binnacle = tmp.getValue(BinnacleModel::class.java)
                         binnacles.add(binnacle!!)
                         binnacleAdapter.notifyDataSetChanged()
+                        adminBinnaclesProgressBar.makeGone()
                     }
                 }
             }

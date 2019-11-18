@@ -3,6 +3,9 @@ package com.grupoqq.app.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -19,6 +22,8 @@ class InputCodeActivity : AppCompatActivity() {
     private var isMechanic = false
     private val binnaclesReference = FirebaseDatabase.getInstance().getReference("binnacles")
     private val mechanicsReference = FirebaseDatabase.getInstance().getReference("mechanics")
+
+    private lateinit var progressDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +55,7 @@ class InputCodeActivity : AppCompatActivity() {
 
     private fun setOnClickListeners() {
         inputCodeBtn.setOnClickListener {
+            progressDialogSetup()
             val code = inputCodeInputTxt.text.toString().trim()
             if (isMechanic) {
                 findMechanic(code)
@@ -75,9 +81,10 @@ class InputCodeActivity : AppCompatActivity() {
                             intentToBinnacleActivity(binnacle.binnacleId)
                             break
                         } else {
-                            showToast(baseContext, "Not found.")
+                            //showToast(baseContext, "Not found.")
                         }
                     }
+                    progressDialog.dismiss()
                 }
             }
         })
@@ -95,6 +102,7 @@ class InputCodeActivity : AppCompatActivity() {
                         val mechanic = tmp.getValue(MechanicModel::class.java)
                         if (mechanic?.mechanicId == code) {
                             intentToMechanicActivity(code)
+                            progressDialog.dismiss()
                             break
                         }
                     }
@@ -114,6 +122,14 @@ class InputCodeActivity : AppCompatActivity() {
         val intent = Intent(this, MechanicActivity::class.java)
         intent.putExtra("MECHANIC_KEY", code)
         startActivity(intent)
+    }
+
+    private fun progressDialogSetup() {
+        val dialog = MaterialAlertDialogBuilder(this)
+        dialog.setView(LayoutInflater.from(this).inflate(R.layout.dialog_progress, null, false))
+        dialog.setCancelable(false)
+        dialog.create()
+        progressDialog = dialog.show()
     }
 
 }

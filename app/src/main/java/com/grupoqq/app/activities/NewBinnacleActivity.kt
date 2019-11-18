@@ -8,8 +8,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -41,6 +43,8 @@ class NewBinnacleActivity : AppCompatActivity() {
     private var newClient = ClientModel()
 
     private var quotation = mutableListOf<QuotationModel>()
+
+    private lateinit var progressDialog: AlertDialog
 
     companion object {
         var isMechanicSelected = false
@@ -153,8 +157,8 @@ class NewBinnacleActivity : AppCompatActivity() {
                         } else {
                             //Mechanic validation
                             if (isMechanicSelected) {
+                                progressDialogSetup()
                                 //Do it
-                                showToast(baseContext, "Ok")
                                 //Generate keys
                                 val binnacleId = "BNC${(1..9999).random()}"
                                 val vehicleId = vehiclesReference.push().key
@@ -276,6 +280,15 @@ class NewBinnacleActivity : AppCompatActivity() {
             bottomSheetDialog
         )
         view.sheetNewBinnacleMechanicsRv.adapter = mechanicAdapter
+    }
+
+
+    private fun progressDialogSetup() {
+        val dialog = MaterialAlertDialogBuilder(this)
+        dialog.setView(LayoutInflater.from(this).inflate(R.layout.dialog_progress, null, false))
+        dialog.setCancelable(false)
+        dialog.create()
+        progressDialog = dialog.show()
     }
 
 }

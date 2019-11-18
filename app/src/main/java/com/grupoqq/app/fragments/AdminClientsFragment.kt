@@ -14,9 +14,7 @@ import com.google.firebase.database.ValueEventListener
 
 import com.grupoqq.app.R
 import com.grupoqq.app.models.ClientModel
-import com.grupoqq.app.utils.ClientAdapter
-import com.grupoqq.app.utils.GenericAdapter
-import com.grupoqq.app.utils.showToast
+import com.grupoqq.app.utils.*
 import kotlinx.android.synthetic.main.fragment_admin_clients.*
 import kotlinx.android.synthetic.main.item_client.*
 
@@ -46,6 +44,7 @@ class AdminClientsFragment : Fragment() {
     }
 
     private fun getClients() {
+        adminClientsProgressBar.makeVisible()
         clientsReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 showToast(requireContext(), p0.message)
@@ -59,6 +58,7 @@ class AdminClientsFragment : Fragment() {
                         val client = tmp.getValue(ClientModel::class.java)
                         clients.add(client!!)
                         clientAdapter.notifyDataSetChanged()
+                        adminClientsProgressBar.makeGone()
                     }
                 }
             }

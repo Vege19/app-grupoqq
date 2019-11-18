@@ -100,6 +100,7 @@ class ReportsActivity : AppCompatActivity() {
     }
 
     private fun getReports() {
+        reportsProgressBar.makeVisible()
         binnacleServicesReference.child("reports").addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 showToast(baseContext, p0.message)
@@ -113,6 +114,7 @@ class ReportsActivity : AppCompatActivity() {
                         val report = tmp.getValue(ReportModel::class.java)
                         reports.add(report!!)
                         reportAdapter.notifyDataSetChanged()
+                        reportsProgressBar.makeGone()
                     }
                 }
             }
@@ -246,6 +248,7 @@ class ReportsActivity : AppCompatActivity() {
                         val sparePart = tmp.getValue(SparePartModel::class.java)
                         spareParts.add(sparePart!!)
                         sparePartAdapter.notifyDataSetChanged()
+                        reportsProgressBar.makeGone()
                     }
                 }
             }
@@ -267,6 +270,7 @@ class ReportsActivity : AppCompatActivity() {
                             val sparePart = tmp.getValue(SparePartModel::class.java)
                             selectedSpareParts.add(sparePart!!)
                             sparePartAdapter.notifyDataSetChanged()
+                            reportsProgressBar.makeGone()
                         }
                     }
                 }

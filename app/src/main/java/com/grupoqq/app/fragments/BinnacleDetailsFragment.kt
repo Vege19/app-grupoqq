@@ -124,7 +124,7 @@ class BinnacleDetailsFragment : Fragment() {
                     }
                     binnacleDetailsTotalTxt.text = "Total: $${cost}"
                 } else {
-                    showToast(requireContext(), "Reference not found.")
+                    //showToast(requireContext(), "Reference not found.")
                 }
             }
 
