@@ -1,11 +1,15 @@
 package com.grupoqq.app.utils
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.grupoqq.app.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,5 +38,6 @@ fun getDateTime(): String {
     val formatter = SimpleDateFormat.getDateTimeInstance()
     return formatter.format(date)
 }
+
 
 

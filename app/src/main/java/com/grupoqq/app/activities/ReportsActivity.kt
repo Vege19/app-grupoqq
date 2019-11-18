@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -50,6 +52,7 @@ class ReportsActivity : AppCompatActivity() {
     private val mReport = ReportModel()
     private var reports = mutableListOf<ReportModel>()
     private lateinit var reportAdapter: GenericAdapter<ReportModel>
+    private lateinit var progressDialog: AlertDialog
 
     private lateinit var bottomSheet: BottomSheetDialog
     private lateinit var bottomSheetView: View
@@ -76,6 +79,14 @@ class ReportsActivity : AppCompatActivity() {
         reportsToolbar.toolbar.title = "Reportes"
         reportsToolbar.toolbar.setNavigationIcon(R.drawable.ic_back)
         reportsToolbar.toolbar.setNavigationOnClickListener { finish() }
+    }
+
+    private fun progressDialogSetup() {
+        val dialog = MaterialAlertDialogBuilder(this)
+        dialog.setView(LayoutInflater.from(this).inflate(R.layout.dialog_progress, null, false))
+        dialog.setCancelable(false)
+        dialog.create()
+        progressDialog = dialog.show()
     }
 
     private fun reportsRecyclerViewSetup() {
@@ -249,10 +260,10 @@ class ReportsActivity : AppCompatActivity() {
                 if (photoUri == null) {
                     showToast(baseContext, "Adjunte una foto")
                 } else {
-                    showToast(baseContext, "ok")
+                    //Show progress dialog
+                    progressDialogSetup()
                     mReport.reportDescription = description
                     uploadPhoto()
-                    bottomSheet.dismiss()
                 }
             }
         }
@@ -327,6 +338,8 @@ class ReportsActivity : AppCompatActivity() {
                             mReport.reportDateTime = getDateTime()
                             binnacleServicesReference.child("reports").child(id).setValue(mReport)
                             bottomSheet.dismiss()
+                            //Dismiss dialog when upload finishes
+                            progressDialog.dismiss()
                         }
                     })
                 }
