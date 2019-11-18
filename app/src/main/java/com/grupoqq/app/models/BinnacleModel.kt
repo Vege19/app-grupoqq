@@ -5,5 +5,6 @@ data class BinnacleModel(
     var client: ClientModel = ClientModel(),
     var vehicle: VehicleModel = VehicleModel(),
     var mechanic: MechanicModel = MechanicModel(),
-    var binnacleServices: HashMap<String, BinnacleServiceModel> = HashMap()
+    var binnacleServices: HashMap<String, BinnacleServiceModel> = HashMap(),
+    var binnacleQuotation: List<QuotationModel> = arrayListOf()
 )

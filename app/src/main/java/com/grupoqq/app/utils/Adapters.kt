@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.item_binnacle.view.*
 import kotlinx.android.synthetic.main.item_binnacle_service.view.*
 import kotlinx.android.synthetic.main.item_client.view.*
 import kotlinx.android.synthetic.main.item_mechanic.view.*
+import kotlinx.android.synthetic.main.item_quotation.view.*
 import kotlinx.android.synthetic.main.item_report.view.*
 import kotlinx.android.synthetic.main.item_service.view.*
 import kotlinx.android.synthetic.main.item_sparepart.view.*
@@ -158,4 +159,11 @@ fun ReportAdapter(reports: List<ReportModel>, context: Context): GenericAdapter<
         //view.itemReportImg.setGlideImage(context, report.reportPhoto)
     })
 
+}
+
+fun QuotationAdapter(quotationList: List<QuotationModel>): GenericAdapter<QuotationModel> {
+    return GenericAdapter(R.layout.item_quotation, quotationList, fun (viewholder, view, quotation, _) {
+        view.itemQuotationNameTxt.text = quotation.quotationName
+        view.itemQuotationPriceTxt.text = "$${quotation.quotationCost}"
+    })
 }

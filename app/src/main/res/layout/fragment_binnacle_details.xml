@@ -208,6 +208,18 @@
                     android:textColor="@color/colorLight"
                     tools:text="Referencia: 101927357"/>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/quotationRv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/binnacleDetailsCodeTxt"
+                    tools:listitem="@layout/item_quotation"
+                    android:paddingTop="16dp"
+                    android:overScrollMode="never"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

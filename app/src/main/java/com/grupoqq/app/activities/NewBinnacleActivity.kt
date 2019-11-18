@@ -40,6 +40,8 @@ class NewBinnacleActivity : AppCompatActivity() {
     private var newBinnacleService = BinnacleServiceModel()
     private var newClient = ClientModel()
 
+    private var quotation = mutableListOf<QuotationModel>()
+
     companion object {
         var isMechanicSelected = false
         var newMechanic = MechanicModel()
@@ -184,6 +186,9 @@ class NewBinnacleActivity : AppCompatActivity() {
                                 mechanicsReference.child(newMechanic.mechanicId).child("mechanicBinnacles").child(mechanicBinnacleId!!).setValue(newBinnacle)
                                 //Load binnacle services
                                 for (tmp in selectedServices) {
+                                    //Fill quotation list
+                                    quotation.add(QuotationModel(tmp.serviceName, tmp.serviceCost))
+                                    //Binnacle services
                                     val binnacleServiceId = binnaclesReference.child(binnacleId)
                                         .child("binnacleServices").push().key
                                     newBinnacleService =
@@ -191,6 +196,8 @@ class NewBinnacleActivity : AppCompatActivity() {
                                     binnaclesReference.child(binnacleId).child("binnacleServices")
                                         .child(binnacleServiceId).setValue(newBinnacleService)
                                 }
+                                //Upload quotation
+                                binnaclesReference.child(binnacleId).child("quotation").setValue(quotation)
                                 finish()
                             } else {
                                 showToast(baseContext, "Seleccione un mecánico.")
