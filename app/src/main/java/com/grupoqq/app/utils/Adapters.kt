@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.item_binnacle.view.*
 import kotlinx.android.synthetic.main.item_binnacle_service.view.*
 import kotlinx.android.synthetic.main.item_client.view.*
 import kotlinx.android.synthetic.main.item_mechanic.view.*
+import kotlinx.android.synthetic.main.item_report.view.*
 import kotlinx.android.synthetic.main.item_service.view.*
 import kotlinx.android.synthetic.main.item_sparepart.view.*
 import kotlinx.android.synthetic.main.item_vehicle.view.*
@@ -142,4 +143,13 @@ fun SparePartAdapter(spareParts: List<SparePartModel>, context: Context, isMecha
         }
 
     })
+}
+
+fun ReportAdapter(reports: List<ReportModel>, context: Context): GenericAdapter<ReportModel> {
+    return GenericAdapter(R.layout.item_report, reports, fun (viewHolder, view, report, _) {
+        view.itemReportDescriptionTxt.text = report.reportDescription
+        view.itemReportDateTxt.text = report.reportDateTime
+        view.itemReportImg.setGlideImage(context, report.reportPhoto)
+    })
+
 }

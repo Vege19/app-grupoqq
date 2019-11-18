@@ -48,19 +48,20 @@ class ReportsActivity : AppCompatActivity() {
     private var binnacleServiceId = ""
     private val storageReference = FirebaseStorage.getInstance().reference
     private val mReport = ReportModel()
+    private var reports = mutableListOf<ReportModel>()
+    private lateinit var reportAdapter: GenericAdapter<ReportModel>
 
     private lateinit var bottomSheet: BottomSheetDialog
     private lateinit var bottomSheetView: View
-
-    private val mAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reports)
 
-
         getReference()
         toolbarSetup()
+        reportsRecyclerViewSetup()
+        getReports()
         getBinnacleService()
 
     }
@@ -75,6 +76,32 @@ class ReportsActivity : AppCompatActivity() {
         reportsToolbar.toolbar.title = "Reportes"
         reportsToolbar.toolbar.setNavigationIcon(R.drawable.ic_back)
         reportsToolbar.toolbar.setNavigationOnClickListener { finish() }
+    }
+
+    private fun reportsRecyclerViewSetup() {
+        reportAdapter = ReportAdapter(reports, this)
+        reportsRv.layoutManager = LinearLayoutManager(this)
+        reportsRv.adapter = reportAdapter
+    }
+
+    private fun getReports() {
+        binnacleServicesReference.child("reports").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                showToast(baseContext, p0.message)
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (reports.size > 0) reports.clear()
+
+                if (p0.exists()) {
+                    for (tmp in p0.children) {
+                        val report = tmp.getValue(ReportModel::class.java)
+                        reports.add(report!!)
+                        reportAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        })
     }
 
     private fun getBinnacleService() {
