@@ -318,13 +318,17 @@ class ReportsActivity : AppCompatActivity() {
             .addOnSuccessListener(object : OnSuccessListener<UploadTask.TaskSnapshot> {
                 override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
                     showToast(baseContext, "Succeded")
-                    val id = binnacleServicesReference.child("reports").push().key
-                    val url = p0?.storage?.downloadUrl.toString()
-                    mReport.reportId = id!!
-                    mReport.reportPhoto = url
-                    mReport.reportDateTime = getDateTime()
-                    binnacleServicesReference.child("reports").child(id).setValue(mReport)
-                    bottomSheet.dismiss()
+                    storageReference.child("photos").child(photoUri?.lastPathSegment!!).downloadUrl.addOnSuccessListener(object: OnSuccessListener<Uri> {
+                        override fun onSuccess(p0: Uri?) {
+                            val id = binnacleServicesReference.child("reports").push().key
+                            val url = p0
+                            mReport.reportId = id!!
+                            mReport.reportPhoto = url.toString()
+                            mReport.reportDateTime = getDateTime()
+                            binnacleServicesReference.child("reports").child(id).setValue(mReport)
+                            bottomSheet.dismiss()
+                        }
+                    })
                 }
             })
             .addOnFailureListener(object: OnFailureListener {

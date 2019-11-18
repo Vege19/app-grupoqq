@@ -3,11 +3,13 @@ package com.grupoqq.app.utils
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.grupoqq.app.R
 import com.grupoqq.app.activities.BinnacleActivity
@@ -22,6 +24,7 @@ import kotlinx.android.synthetic.main.item_report.view.*
 import kotlinx.android.synthetic.main.item_service.view.*
 import kotlinx.android.synthetic.main.item_sparepart.view.*
 import kotlinx.android.synthetic.main.item_vehicle.view.*
+import kotlinx.android.synthetic.main.sheet_new_report.view.*
 
 
 fun MechanicAdapter(mechanics: List<MechanicModel>, context: Context, imageView: ImageView?, textView: TextView?, bottomSheet: BottomSheetDialog?): GenericAdapter<MechanicModel> {
@@ -149,7 +152,10 @@ fun ReportAdapter(reports: List<ReportModel>, context: Context): GenericAdapter<
     return GenericAdapter(R.layout.item_report, reports, fun (viewHolder, view, report, _) {
         view.itemReportDescriptionTxt.text = report.reportDescription
         view.itemReportDateTxt.text = report.reportDateTime
-        view.itemReportImg.setGlideImage(context, report.reportPhoto)
+        Log.d("debug", "Uri path: " + report.reportPhoto)
+        //view.itemReportImg.setImageURI(Uri.parse(report.reportPhoto))
+        Glide.with(context).load(Uri.parse(report.reportPhoto)).into(view.itemReportImg)
+        //view.itemReportImg.setGlideImage(context, report.reportPhoto)
     })
 
 }
