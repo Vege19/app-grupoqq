@@ -33,6 +33,7 @@ import com.grupoqq.app.models.ReportModel
 import com.grupoqq.app.models.SparePartModel
 import com.grupoqq.app.utils.*
 import kotlinx.android.synthetic.main.activity_reports.*
+import kotlinx.android.synthetic.main.fragment_binnacle_details.*
 import kotlinx.android.synthetic.main.layout_actionbar.view.*
 import kotlinx.android.synthetic.main.layout_service_spare_parts.*
 import kotlinx.android.synthetic.main.layout_service_spare_parts.view.*
@@ -389,3 +390,4 @@ class ReportsActivity : AppCompatActivity() {
     }
 
 }
+

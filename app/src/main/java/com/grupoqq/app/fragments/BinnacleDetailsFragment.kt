@@ -77,6 +77,8 @@ class BinnacleDetailsFragment : Fragment() {
             binnacleDetailsMechanicPhoneTxt.text = "Teléfono: " + binnacle.mechanic.mechanicPhone
         }
 
+        updateTotalCost()
+
     }
 
     private fun quotationListRecyclerViewSetup() {
@@ -101,6 +103,28 @@ class BinnacleDetailsFragment : Fragment() {
                         quotationList.add(quotation!!)
                         quotationAdapter.notifyDataSetChanged()
                     }
+                }
+            }
+
+        })
+    }
+
+    private fun updateTotalCost() {
+        var cost = 0.0
+        binnaclesReferences.child(BinnacleActivity.binnacleId).child("quotation").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                showToast(requireContext(), p0.message)
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    for (tmp in p0.children) {
+                        val quotation = tmp.getValue(QuotationModel::class.java)
+                        cost += quotation?.quotationCost!!
+                    }
+                    binnacleDetailsTotalTxt.text = "Total: $${cost}"
+                } else {
+                    showToast(requireContext(), "Reference not found.")
                 }
             }
 
