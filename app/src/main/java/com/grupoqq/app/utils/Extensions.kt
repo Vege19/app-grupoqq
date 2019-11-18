@@ -6,6 +6,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun View.makeVisible() {
     this.visibility = View.VISIBLE
@@ -25,6 +27,12 @@ fun ImageView.setGlideImage(context: Context, url: String, circleCrop: Boolean =
     } else {
         Glide.with(context).load(url).into(this)
     }
+}
+
+fun getDateTime(): String {
+    val date = Calendar.getInstance().time
+    val formatter = SimpleDateFormat.getDateTimeInstance()
+    return formatter.format(date)
 }
 
 
